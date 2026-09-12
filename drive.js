@@ -1,6 +1,6 @@
 // Private per-account storage. Saves are immutable snapshots: no prior version is overwritten.
 export class DriveWorkspace {
-  constructor(fetcher=fetch){this.fetcher=fetcher;this.token='';this.expires=0;this.head='';this.folderId='';this.folderName='';}
+  constructor(fetcher=(...args)=>globalThis.fetch(...args)){this.fetcher=fetcher;this.token='';this.expires=0;this.head='';this.folderId='';this.folderName='';}
   authorize(token,seconds){this.token=token;this.expires=Date.now()+(Number(seconds)-30)*1000;}
   clear(){this.token='';this.expires=0;this.head='';this.folderId='';this.folderName='';}
   async selectFolder(id){
@@ -28,3 +28,4 @@ export class DriveWorkspace {
     this.head=(await r.json()).id;
   }
 }
+
